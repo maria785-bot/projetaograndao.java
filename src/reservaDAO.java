@@ -31,18 +31,15 @@ public class ReservaDAO implements Persistencia<Reserva> {
     public synchronized void salvar(Reserva reserva) {
         List<Reserva> reservas = listarTodos();
 
-        // atribui id simples se necessário (supondo id int <=0 indica sem id)
         try {
             if (reserva.getId() <= 0) {
                 int nextId = reservas.stream()
                         .mapToInt(Reserva::getId)
                         .max()
                         .orElse(0) + 1;
-                reserva.setId(nextId); // remova se sua model não permitir setId
+                reserva.setId(nextId); 
             }
         } catch (Exception ignored) {
-            // se Reserva não expõe getId/setId, ignore a lógica de id
-        }
 
         reservas.add(reserva);
         salvarListaAtomicamente(reservas);
@@ -114,7 +111,6 @@ public class ReservaDAO implements Persistencia<Reserva> {
         salvarListaAtomicamente(filtrado);
     }
 
-    // gravação atômica para reduzir risco de corrupção, se vier ao caso.
     private void salvarListaAtomicamente(List<Reserva> reservas) {
         Path target = Paths.get(FILE_PATH);
         try {
