@@ -16,7 +16,7 @@ public class RelatorioView {
         this.reservaDAO = Objects.requireNonNull(reservaDAO, "reservaDAO não pode ser nulo");
     }
 
-    // Método que retorna reservas para o período (inclusive)
+    // Método que retorna reservas para o período 
     public List<Reserva> getReservasPorPeriodo(LocalDate inicio, LocalDate fim) {
         if (inicio == null || fim == null) {
             throw new IllegalArgumentException("Datas não podem ser nulas.");
